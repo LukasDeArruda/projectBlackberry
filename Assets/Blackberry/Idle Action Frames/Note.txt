@@ -1,0 +1,1 @@
+This animation reverses upon completion, rather than looping - M

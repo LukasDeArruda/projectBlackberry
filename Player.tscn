@@ -1,0 +1,124 @@
+[gd_scene load_steps=31 format=2]
+
+[ext_resource path="res://Assets/Blackberry/Run Cycle Frames/RunCycle6.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Blackberry/Run Cycle Frames/RunCycle5.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Blackberry/Run Cycle Frames/RunCycle7.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Blackberry/Run Cycle Frames/RunCycle1.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Blackberry/Idle Frames/Idle6.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Blackberry/Idle Frames/Idle1.png" type="Texture" id=6]
+[ext_resource path="res://Player.gd" type="Script" id=7]
+[ext_resource path="res://Assets/Blackberry/Idle Frames/Idle3.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Blackberry/Run Cycle Frames/RunCycle3.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Blackberry/Idle Frames/Idle2.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Blackberry/Idle Frames/Idle7.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Blackberry/Idle Frames/Idle4.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Blackberry/Run Cycle Frames/RunCycle2.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Blackberry/Idle Frames/Idle5.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Blackberry/Run Cycle Frames/RunCycle4.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Blackberry/Rough Jump Frames/RJump3.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Blackberry/(ALT) 2 Hit Sheet.png" type="Texture" id=17]
+[ext_resource path="res://Assets/Blackberry/Rough Jump Frames/RJump2.png" type="Texture" id=18]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 68.779, 133.883 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 114.76, 115.904 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 70.9883, 129.09 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 17 )
+region = Rect2( 400, 0, 400, 260 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 17 )
+region = Rect2( 800, 0, 400, 260 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 17 )
+region = Rect2( 1200, 0, 400, 260 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 17 )
+region = Rect2( 1600, 0, 400, 260 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 17 )
+region = Rect2( 2000, 0, 400, 260 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 17 )
+region = Rect2( 2400, 0, 400, 260 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 17 )
+region = Rect2( 0, 0, 400, 260 )
+
+[sub_resource type="SpriteFrames" id=11]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 5 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "idle",
+"speed": 7.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 13 ), ExtResource( 9 ), ExtResource( 15 ), ExtResource( 2 ), ExtResource( 1 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "run",
+"speed": 14.0
+}, {
+"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), ExtResource( 6 ) ],
+"loop": false,
+"name": "StandAttack",
+"speed": 14.0
+}, {
+"frames": [ ExtResource( 18 ), ExtResource( 16 ) ],
+"loop": false,
+"name": "jump",
+"speed": 15.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 80.6475, 58.3216 )
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 7 )
+
+[node name="IdleHitbox" type="CollisionShape2D" parent="."]
+position = Vector2( -2.99658, 0 )
+shape = SubResource( 1 )
+
+[node name="RunHitbox" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 5.99329, 11.9865 )
+shape = SubResource( 2 )
+disabled = true
+
+[node name="JumpHitbox" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 2.1189, 29.665 )
+shape = SubResource( 3 )
+disabled = true
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 11 )
+animation = "idle"
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="StandAttack" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StandAttack"]
+position = Vector2( 94.1804, 6.7272 )
+shape = SubResource( 12 )
+[connection signal="body_entered" from="StandAttack" to="." method="_on_StandAttack_body_entered"]
